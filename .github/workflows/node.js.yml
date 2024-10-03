@@ -1,0 +1,35 @@
+name: Abcall Mobile CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master, develop, 'feature/**', 'release/**', 'hotfix/**' ]
+  pull_request:
+    branches: [ master, develop, 'release/**' ]
+
+jobs:
+  abcall-ci:
+    name: abcall-ci
+    runs-on: ubuntu-latest
+        
+    steps:
+    - name: repository checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 20.17.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.17.0'
+        cache: 'npm'
+        
+    - name: npm install
+      run: npm ci
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Unit tests
+      run: npm run test:pipeline
+
+    - name: Build
+      run: npm run build --if-present
