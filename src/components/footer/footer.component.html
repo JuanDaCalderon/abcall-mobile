@@ -1,0 +1,7 @@
+<ion-footer class="footer">
+  <ion-toolbar>
+    <ion-title class="fs-small ion-text-center">
+      <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 100%; height: 20px;" />
+      {{ "abc.footer.copy" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-footer>
