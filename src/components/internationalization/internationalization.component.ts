@@ -1,9 +1,13 @@
 import {Component} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {LangsImgs} from './models';
 import {DEFAULT_LANG, LANGS} from 'src/constants';
+import {IonicModule} from '@ionic/angular';
+import {CommonModule} from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [IonicModule, TranslateModule, CommonModule],
   selector: 'app-internationalization',
   templateUrl: './internationalization.component.html',
   styleUrls: ['./internationalization.component.scss']

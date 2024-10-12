@@ -11,7 +11,16 @@ import {LoginPage} from './login.page';
 import {FooterComponent, InternationalizationComponent} from 'src/components';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IonicModule, LoginPageRoutingModule, TranslateModule],
-  declarations: [LoginPage, InternationalizationComponent, FooterComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IonicModule,
+    LoginPageRoutingModule,
+    TranslateModule,
+    FooterComponent,
+    InternationalizationComponent
+  ],
+  declarations: [LoginPage]
 })
 export class LoginPageModule {}
