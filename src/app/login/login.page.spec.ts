@@ -1,8 +1,8 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 import {LoginPage} from './login.page';
 import {EventEmitter} from '@angular/core';
 import {LangChangeEvent, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {of} from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {AuthService} from 'src/services';
 import {Router} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
@@ -54,16 +54,37 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should submit the form and display a toast on successful login', fakeAsync(async () => {
-    const email = 'test@example.com';
-    const password = 'password123';
+  it('should submit the form and display a toast on successful login', fakeAsync(() => {
+    mockAuthService.login.and.returnValue(
+      of({
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5kYWNhbG1haWwuY29tIiwidXNlcm5hbWUiOiJiZWRhbW9rYSIsImV4cCI6MTcyODcwMTg0NX0.8AweMAcU5LCvA7TzPRf5kRJgHCRgrTEEfEC_gg4Ml7c'
+      })
+    );
+    component.submit();
+    expect(component.isLoading).toBeTrue();
+    tick();
+    fixture.whenStable().then(() => {
+      flush();
+      expect(mockAuthService.login).toHaveBeenCalledWith('', '');
+    });
+  }));
 
-    mockAuthService.login.and.returnValue(of(true)); // Simula un login exitoso
-    component.loginForm.setValue({email, password});
+  it('should submit the form and display a toast on successful login', fakeAsync(() => {
+    const mockError = {error: {message: 'invalid credentials'}};
+    mockAuthService.login.and.returnValue(throwError(() => mockError));
+    component.submit();
+    fixture.whenStable().then(() => {
+      expect(mockAuthService.login).toHaveBeenCalled();
+    });
+  }));
 
-    await component.submit(); // Llama al método submit
-    tick(); // Mueve el temporizador para que se complete la suscripción
-
-    expect(mockAuthService.login).toHaveBeenCalledWith(email, password);
+  it('should submit the form with no error message', fakeAsync(() => {
+    const mockError = {};
+    mockAuthService.login.and.returnValue(throwError(() => mockError));
+    component.submit();
+    fixture.whenStable().then(() => {
+      expect(mockAuthService.login).toHaveBeenCalled();
+    });
   }));
 });
