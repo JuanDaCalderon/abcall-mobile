@@ -1,0 +1,28 @@
+.crear-incidencia {
+    .logo {
+      width: 50px;
+      height: auto;
+    }
+    .title {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+    .label {
+      font-size: 18px;
+    }
+    .container-inputs {
+      --ion-margin: 10px;
+    }
+    .button {
+      background-color: #9517EA;
+    }
+    .home-icon {
+        font-size: 35px;
+        color: #9517EA;
+    }
+    ::ng-deep .button-dark {
+      --background: #757575 !important;
+    }
+  }
+  

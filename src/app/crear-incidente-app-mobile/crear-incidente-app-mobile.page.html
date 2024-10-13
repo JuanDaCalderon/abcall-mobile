@@ -1,15 +1,166 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>crear-incidente-app-mobile</ion-title>
+    <ion-title>
+      <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 20px;" />
+      {{"abc.crearIncidenciaAppMobile.header" | translate}}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">crear-incidente-app-mobile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding crear-incidencia">
+  <ion-row class = "ion-align-items-center ion-justify-content-between">
+    <ion-col size="auto">
+      <app-internationalization />
+    </ion-col>
+    <ion-col size="auto">
+      <ion-icon class="home-icon" name="home"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-padding">
+      <ion-col size="auto">
+        <ion-img class="logo" src="assets/img/logo.png" alt="ABCALL lOGO" />
+      </ion-col>
+      <ion-col size="auto">
+        <h1 class="title">ABCallManager</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <form [formGroup]="crearIncidenciaForm">
+      <ion-row class="container-inputs">
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.customer" | translate}}</label>
+          <ion-select formControlName="customer" class="ion-margin-top" aria-label="customer" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.customer.placeholder.message" | translate}}'>
+            <ion-select-option value="Cliente 1">Cliente 1</ion-select-option>
+            <ion-select-option value="Cliente 2">Cliente 2</ion-select-option>
+            <ion-select-option value="Cliente 3">Cliente 3</ion-select-option>
+          </ion-select>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['customer'].touched && crearIncidenciaForm.controls['customer'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.customer'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueDate" | translate}}</label>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.userName" | translate}}</label>
+          <ion-input formControlName="userName" class="ion-margin-top" aria-label="userName" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.userName.placeholder.message" | translate}}'></ion-input>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['userName'].touched && crearIncidenciaForm.controls['userName'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.userName'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.email" | translate}}</label>
+          <ion-input formControlName="email" class="ion-margin-top" aria-label="email" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.email.placeholder.message" | translate}}'></ion-input>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['email'].touched && crearIncidenciaForm.controls['email'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.email'| translate}}
+          </ion-text>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['email'].touched && crearIncidenciaForm.controls['email'].errors?.['email']">
+            {{'abc.crearIncidenciaAppMobile.error.format.email'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.userAddress" | translate}}</label>
+          <ion-input formControlName="userAddress" class="ion-margin-top" aria-label="userAddress" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.userAddress.placeholder.message" | translate}}'></ion-input>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['userAddress'].touched && crearIncidenciaForm.controls['userAddress'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.userAddress'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.phoneNumber" | translate}}</label>
+          <ion-input formControlName="phoneNumber" class="ion-margin-top" aria-label="phoneNumber" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.phoneNumber.placeholder.message" | translate}}'></ion-input>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['phoneNumber'].touched && crearIncidenciaForm.controls['phoneNumber'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.phoneNumber'| translate}}
+          </ion-text>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['phoneNumber'].touched && crearIncidenciaForm.controls['phoneNumber'].errors?.['pattern']">
+            {{ 'abc.crearIncidenciaAppMobile.error.format.phoneNumber'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueDescription" | translate}}</label>
+          <ion-input formControlName="issueDescription" class="ion-margin-top" aria-label="issueDescription" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.issueDescription.placeholder.message" | translate}}'></ion-input>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['issueDescription'].touched && crearIncidenciaForm.controls['issueDescription'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.issueDescription'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issuePriority" | translate}}</label>
+          <ion-select formControlName="issuePriority" class="ion-margin-top" aria-label="issuePriority" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.issuePriority.placeholder.message" | translate}}'>
+            <ion-select-option value="Alta">Alta</ion-select-option>
+            <ion-select-option value="Media">Media</ion-select-option>
+            <ion-select-option value="Baja">Baja</ion-select-option>
+          </ion-select>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['issuePriority'].touched && crearIncidenciaForm.controls['issuePriority'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.issuePriority'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueStatus" | translate}}</label>
+          <ion-select formControlName="issueStatus" class="ion-margin-top" aria-label="issueStatus" fill="outline"
+            placeholder='{{"abc.crearIncidenciaAppMobile.issueStatus.placeholder.message" | translate}}'>
+            <ion-select-option value="Abierto">Abierto</ion-select-option>
+            <ion-select-option value="Cerrado">Cerrado</ion-select-option>
+          </ion-select>
+          <ion-text class="fs-tiny" color="danger"
+            *ngIf="crearIncidenciaForm.controls['issueStatus'].touched && crearIncidenciaForm.controls['issueStatus'].errors?.['required']">
+            {{ 'abc.crearIncidenciaAppMobile.error.required.issueStatus'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueComment" | translate}}</label>
+          <ion-input class="ion-margin-top" aria-label="issueComment" fill="outline" 
+          placeholder='{{"abc.crearIncidenciaAppMobile.issueComment.placeholder.message" | translate}}'></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block">Guardar</ion-button>
+        </ion-col>
+        <ion-col class="crear-incidencia">
+          <ion-button class="button-dark" expand="block">Cerrar caso</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="crear-incidencia">
+          <ion-button class="button-dark" expand="block">Cerrar sesión</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-label class="ion-padding">Pepito Pérez (Usuario)</ion-label>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
 </ion-content>
-
 <app-footer></app-footer>
