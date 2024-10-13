@@ -5,6 +5,8 @@ import {EventEmitter} from '@angular/core';
 import {LangChangeEvent} from '@ngx-translate/core';
 import {of} from 'rxjs';
 import {IonicModule} from '@ionic/angular';
+import {HttpClientModule} from '@angular/common/http'; // Import HttpClientModule
+import {IncidentesService} from '../../services/incidentes.service'; // Adjust the path as needed
 
 describe('CrearIncidenteAppMobilePage', () => {
   let component: CrearIncidenteAppMobilePage;
@@ -34,8 +36,8 @@ describe('CrearIncidenteAppMobilePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CrearIncidenteAppMobilePage],
-      imports: [IonicModule.forRoot(), TranslateModule.forRoot()],
-      providers: [{provide: TranslateService, useValue: translateServiceMock}]
+      imports: [IonicModule.forRoot(), TranslateModule.forRoot(), HttpClientModule],
+      providers: [{provide: TranslateService, useValue: translateServiceMock}, IncidentesService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CrearIncidenteAppMobilePage);

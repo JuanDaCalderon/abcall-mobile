@@ -26,7 +26,7 @@
     </ion-row>
   </ion-grid>
   <ion-grid>
-    <form [formGroup]="crearIncidenciaForm">
+    <form [formGroup]="crearIncidenciaForm" (submit)="submit()">
       <ion-row class="container-inputs">
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
@@ -45,7 +45,7 @@
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
           <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueDate" | translate}}</label>
-          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-datetime-button formControlName="datetime" datetime="datetime"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
               <ion-datetime id="datetime"></ion-datetime>
@@ -140,16 +140,13 @@
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
           <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueComment" | translate}}</label>
-          <ion-input class="ion-margin-top" aria-label="issueComment" fill="outline" 
+          <ion-input formControlName="issueStatus" class="ion-margin-top" aria-label="issueComment" fill="outline" 
           placeholder='{{"abc.crearIncidenciaAppMobile.issueComment.placeholder.message" | translate}}'></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <ion-button expand="block">Guardar</ion-button>
-        </ion-col>
-        <ion-col class="crear-incidencia">
-          <ion-button class="button-dark" expand="block">Cerrar caso</ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
