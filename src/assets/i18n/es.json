@@ -39,5 +39,15 @@
     "abc.crearIncidenciaAppMobile.error.required.issueStatus": "El estatus del incidente es obligatorio",
     "abc.crearIncidenciaAppMobile.issueStatus.placeholder.message": "Ingrese el estado del incidente",
     "abc.crearIncidenciaAppMobile.issueComment": "Comentario del incidente",
-    "abc.crearIncidenciaAppMobile.issueComment.placeholder.message": "Ingrese el comentario del incidente"
+    "abc.crearIncidenciaAppMobile.issueComment.placeholder.message": "Ingrese el comentario del incidente",
+    "abc.crearIncidenciaAppMobile.success.message": "Incidente creado correctamente",
+    "abc.crearIncidenciaAppMobile.incorrect.message": "Los datos ingresados no cumplen con los requisitos, están incompletos o no son válidos",
+    "abc.crearIncidenciaAppMobile.logout": "Cerrar sesión",
+    "abc.crearIncidenciaAppMobile.logout.message": "La sesión actual se cerrará, ¿continuar?",
+    "abc.crearIncidenciaAppMobile.logout.yes": "Sí",
+    "abc.crearIncidenciaAppMobile.logout.no": "No",
+    "abc.crearIncidenciaAppMobile.createIssueButton": "Crear incidente",
+    "abc.crearIncidenciaAppMobile.createIssueButton.message": "El incidente será creado, ¿continuar?",
+    "abc.crearIncidenciaAppMobile.createIssueButton.yes": "Sí",
+    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No"
 }
