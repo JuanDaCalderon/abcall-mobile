@@ -21,7 +21,6 @@ describe('FooterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [FooterComponent],
       imports: [IonicModule.forRoot(), TranslateModule.forRoot()],
       providers: [{provide: TranslateService, useValue: translateServiceMock}]
     }).compileComponents();

@@ -13,7 +13,6 @@ describe('InternationalizationComponent', () => {
     mockTranslateService.getLangs.and.returnValue(['en', 'es']);
     mockTranslateService.getDefaultLang.and.returnValue('en');
     TestBed.configureTestingModule({
-      declarations: [InternationalizationComponent],
       providers: [{provide: TranslateService, useValue: mockTranslateService}],
       imports: [IonicModule.forRoot()]
     }).compileComponents();

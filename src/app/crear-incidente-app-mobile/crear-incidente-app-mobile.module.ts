@@ -5,9 +5,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {TranslateModule} from '@ngx-translate/core';
 
-import {LoginPageRoutingModule} from './login-routing.module';
+import {CrearIncidenteAppMobilePageRoutingModule} from './crear-incidente-app-mobile-routing.module';
 
-import {LoginPage} from './login.page';
+import {CrearIncidenteAppMobilePage} from './crear-incidente-app-mobile.page';
 import {FooterComponent, InternationalizationComponent} from 'src/components';
 
 @NgModule({
@@ -16,11 +16,11 @@ import {FooterComponent, InternationalizationComponent} from 'src/components';
     ReactiveFormsModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
+    CrearIncidenteAppMobilePageRoutingModule,
     TranslateModule,
     FooterComponent,
     InternationalizationComponent
   ],
-  declarations: [LoginPage]
+  declarations: [CrearIncidenteAppMobilePage]
 })
-export class LoginPageModule {}
+export class CrearIncidenteAppMobilePageModule {}

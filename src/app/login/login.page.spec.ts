@@ -37,7 +37,7 @@ describe('LoginPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoginPage, InternationalizationComponent, FooterComponent],
+      declarations: [LoginPage],
       imports: [IonicModule.forRoot(), ReactiveFormsModule, TranslateModule.forRoot()],
       providers: [
         {provide: AuthService, useValue: mockAuthService},

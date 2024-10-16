@@ -14,6 +14,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'crear-incidente-app-mobile',
+    loadChildren: () =>
+      import('./crear-incidente-app-mobile/crear-incidente-app-mobile.module').then((m) => m.CrearIncidenteAppMobilePageModule)
   }
 ];
 @NgModule({
