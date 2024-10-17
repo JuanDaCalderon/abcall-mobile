@@ -7,16 +7,9 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class IncidentesService {
-  /** API url */
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrlCrearIncidente;
   constructor(private http: HttpClient) {}
 
-  /**
-   * Login the user to the backend
-   * @param {string} email Email of the user
-   * @param {string} password Password of the user
-   * @returns {Observable<string>}
-   */
   public crearIncidente(
     customer: string,
     datetime: string,
@@ -26,18 +19,20 @@ export class IncidentesService {
     phoneNumber: string,
     issueDescription: string,
     issuePriority: string,
-    issueStatus: string
+    issueStatus: string,
+    issueComment: string
   ): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/incidentes`, {
-      customer,
-      datetime,
-      userName,
-      email,
-      userAddress,
-      phoneNumber,
-      issueDescription,
-      issuePriority,
-      issueStatus
+      cliente: customer,
+      fechacreacion: datetime,
+      usuario: userName,
+      correo: email,
+      direccion: userAddress,
+      telefono: phoneNumber,
+      descripcion: issueDescription,
+      prioridad: issuePriority,
+      estado: issueStatus,
+      comentarios: issueComment
     });
   }
 }
