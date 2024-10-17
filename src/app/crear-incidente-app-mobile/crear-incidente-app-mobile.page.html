@@ -45,10 +45,10 @@
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
           <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueDate" | translate}}</label>
-          <ion-datetime-button formControlName="datetime" datetime="datetime"></ion-datetime-button>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
-              <ion-datetime id="datetime"></ion-datetime>
+              <ion-datetime id="datetime" formControlName="datetime" displayFormat="YYYY-MM-DD HH:mm:ss"></ion-datetime>
             </ng-template>
           </ion-modal>
         </ion-col>
@@ -140,18 +140,18 @@
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
           <label class="fs-normal">{{"abc.crearIncidenciaAppMobile.issueComment" | translate}}</label>
-          <ion-input formControlName="issueStatus" class="ion-margin-top" aria-label="issueComment" fill="outline" 
+          <ion-input formControlName="issueComment" class="ion-margin-top" aria-label="issueComment" fill="outline" 
           placeholder='{{"abc.crearIncidenciaAppMobile.issueComment.placeholder.message" | translate}}'></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button expand="block">Guardar</ion-button>
+          <ion-button expand="block" (click)="confirmarCrearIncidente()">{{"abc.crearIncidenciaAppMobile.createIssueButton" | translate}}</ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="crear-incidencia">
-          <ion-button class="button-dark" expand="block">Cerrar sesión</ion-button>
+          <ion-button class="button-dark" expand="block" (click)="cerrarSesion()">{{"abc.crearIncidenciaAppMobile.logout" | translate}}</ion-button>
         </ion-col>
         <ion-col>
           <ion-label class="ion-padding">Pepito Pérez (Usuario)</ion-label>
@@ -160,4 +160,5 @@
     </form>
   </ion-grid>
 </ion-content>
+
 <app-footer></app-footer>

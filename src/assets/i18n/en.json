@@ -39,5 +39,15 @@
     "abc.crearIncidenciaAppMobile.error.required.issueStatus": "Issue status is required",
     "abc.crearIncidenciaAppMobile.issueStatus.placeholder.message": "Enter issue status",
     "abc.crearIncidenciaAppMobile.issueComment": "Issue comment",
-    "abc.crearIncidenciaAppMobile.issueComment.placeholder.message": "Enter issue comment"
+    "abc.crearIncidenciaAppMobile.issueComment.placeholder.message": "Enter issue comment",
+    "abc.crearIncidenciaAppMobile.success.message": "Issue created correctly",
+    "abc.crearIncidenciaAppMobile.incorrect.message": "The data entered does not meet the requirements, is incomplete or is invalid",
+    "abc.crearIncidenciaAppMobile.logout": "Log out",
+    "abc.crearIncidenciaAppMobile.logout.message": "The current session will be closed, continue?",
+    "abc.crearIncidenciaAppMobile.logout.yes": "Yes",
+    "abc.crearIncidenciaAppMobile.logout.no": "No",
+    "abc.crearIncidenciaAppMobile.createIssueButton": "Create issue",
+    "abc.crearIncidenciaAppMobile.createIssueButton.message": "The issue will be created, continue?",
+    "abc.crearIncidenciaAppMobile.createIssueButton.yes": "Yes",
+    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No"
 }
