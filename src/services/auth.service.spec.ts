@@ -43,7 +43,6 @@ describe('AuthService', () => {
     const req = httpMock.expectOne(`${environment.apiUrl}/usuario/login`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({email, password});
-
     req.flush(mockResponse);
   });
 });
