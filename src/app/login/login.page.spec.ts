@@ -1,19 +1,20 @@
-import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {LoginPage} from './login.page';
 import {EventEmitter} from '@angular/core';
 import {LangChangeEvent, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {of, throwError} from 'rxjs';
+import {of} from 'rxjs';
 import {AuthService} from 'src/services';
 import {Router} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
-import {FooterComponent, InternationalizationComponent} from 'src/components';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {loginUser} from './models';
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
+  let toastMock: {present: jasmine.Spy};
   const mockRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
-  const mockAuthService = jasmine.createSpyObj('AuthService', ['login']);
+  const mockAuthService = jasmine.createSpyObj<AuthService>('AuthService', ['login']);
   const translateService = jasmine.createSpyObj('translateService', [
     'getTranslation',
     'instant',
@@ -55,36 +56,26 @@ describe('LoginPage', () => {
   });
 
   it('should submit the form and display a toast on successful login', fakeAsync(() => {
-    mockAuthService.login.and.returnValue(
-      of({
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5kYWNhbG1haWwuY29tIiwidXNlcm5hbWUiOiJiZWRhbW9rYSIsImV4cCI6MTcyODcwMTg0NX0.8AweMAcU5LCvA7TzPRf5kRJgHCRgrTEEfEC_gg4Ml7c'
-      })
-    );
+    toastMock = {present: jasmine.createSpy('present')};
+    const loginResponseObject: loginUser = {
+      id: 'e754610c-ee4f-471d-9925-b9bffa702589',
+      email: 'juandacalji@gmail.com',
+      username: 'bedamoka',
+      nombres: 'juan david',
+      apellidos: 'calderon jimenez',
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5kYWNhbGppQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYmVkYW1va2EiLCJleHAiOjE3MjkxMjM5MTV9.-ohXO8kW-TsMmAW57H-txm_P1cENenKrcTf6La-DzOI'
+    };
+    component.loginForm = new FormGroup({
+      email: new FormControl('test@example.com'),
+      password: new FormControl('password123')
+    });
+    mockAuthService.login.and.returnValue(of(loginResponseObject));
+    component.toastSuccess$ = of(toastMock as unknown as HTMLIonToastElement);
     component.submit();
-    expect(component.isLoading).toBeTrue();
     tick();
-    fixture.whenStable().then(() => {
-      flush();
-      expect(mockAuthService.login).toHaveBeenCalledWith('', '');
-    });
-  }));
-
-  it('should submit the form and display a toast on successful login', fakeAsync(() => {
-    const mockError = {error: {message: 'invalid credentials'}};
-    mockAuthService.login.and.returnValue(throwError(() => mockError));
-    component.submit();
-    fixture.whenStable().then(() => {
-      expect(mockAuthService.login).toHaveBeenCalled();
-    });
-  }));
-
-  it('should submit the form with no error message', fakeAsync(() => {
-    const mockError = {};
-    mockAuthService.login.and.returnValue(throwError(() => mockError));
-    component.submit();
-    fixture.whenStable().then(() => {
-      expect(mockAuthService.login).toHaveBeenCalled();
-    });
+    expect(component.isLoading).toBeFalse();
+    expect(mockAuthService.login).toHaveBeenCalledWith('test@example.com', 'password123');
+    expect(toastMock.present).toHaveBeenCalledTimes(1);
   }));
 });

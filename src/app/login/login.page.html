@@ -25,14 +25,14 @@
         <ion-col class="ion-padding-vertical" size="12">
           <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
           <label class="fs-normal">{{"abc.login.input.email" | translate}}</label>
-          <ion-input formControlName="email" class="ion-margin-top" aria-label="email" fill="outline"
-            placeholder="abcall@gmail.com"></ion-input>
+          <ion-input data-cy="email-input" formControlName="email" class="ion-margin-top" aria-label="email"
+            fill="outline" placeholder="abcall@gmail.com"></ion-input>
 
-          <ion-text class="fs-tiny" color="danger"
+          <ion-text data-cy="email-error-required" class="fs-tiny" color="danger"
             *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']">
             {{ 'abc.login.input.error.required.email'| translate}}
           </ion-text>
-          <ion-text class="fs-tiny" color="danger"
+          <ion-text data-cy="email-error-format" class="fs-tiny" color="danger"
             *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']">
             {{'abc.login.input.error.format.email'| translate}}
           </ion-text>
@@ -44,17 +44,13 @@
             fill="outline" type="password" placeholder="*********">
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
-          <ion-text class="fs-tiny" color="danger"
+          <ion-text data-cy="password-error-required" class="fs-tiny" color="danger"
             *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']">
             {{"abc.login.input.error.required.password" | translate}}</ion-text>
-          <ion-text class="fs-tiny" color="danger"
-            *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['minlength']">
-            {{"abc.login.input.error.minlength.password" | translate}}
-          </ion-text>
         </ion-col>
         <ion-col class="button ion-padding-top" size="12">
-          <ion-button [disabled]="!loginForm.valid || isLoading" type="submit" class="fs-medium ion-text-capitalize"
-            expand="block" fill="solid">
+          <ion-button data-cy="submit-button" [disabled]="!loginForm.valid || isLoading" type="submit"
+            class="fs-medium ion-text-capitalize" expand="block" fill="solid">
             <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 28px;" />
             <span class="button-text ion-padding-vertical">
               {{"abc.btn.login" | translate}}

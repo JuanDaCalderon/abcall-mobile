@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, take} from 'rxjs';
+import {take, from, Observable, forkJoin} from 'rxjs';
 import {Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
 import {DEFAULT_LANG} from 'src/constants';
@@ -15,6 +15,16 @@ export class LoginPage {
   public loginForm: FormGroup = new FormGroup('');
   public hasLoadTranslations: boolean = false;
   public isLoading: boolean = false;
+  public toastSuccess$: Observable<HTMLIonToastElement> = from(
+    this.toastController.create({
+      duration: 5000,
+      cssClass: 'fs-normal',
+      color: 'primary',
+      icon: 'checkmark-done-outline',
+      position: 'bottom',
+      swipeGesture: 'vertical'
+    })
+  );
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -24,7 +34,7 @@ export class LoginPage {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]
     });
     this.translateService
       .getTranslation(DEFAULT_LANG)
@@ -33,42 +43,19 @@ export class LoginPage {
         this.hasLoadTranslations = !!lang;
       });
   }
-  public async submit() {
+  public submit() {
     this.isLoading = true;
-    this.authService
-      .login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
-      .pipe(
-        take(1),
-        catchError(async (error) => {
-          const errorMsg: string = `${this.translateService.instant('abc.toast.incorrect.message')} ${error && error.error?.message ? (error.error?.message as string).toLowerCase() : ''}`;
-          const toast = await this.toastController.create({
-            message: errorMsg,
-            duration: 5000,
-            cssClass: 'fs-normal',
-            color: 'danger',
-            icon: 'alert-circle-outline',
-            position: 'bottom',
-            swipeGesture: 'vertical'
-          });
+    forkJoin([this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value), this.toastSuccess$])
+      .pipe(take(1))
+      .subscribe(([loginUser, toast]) => {
+        if (!!loginUser && !!loginUser.token) {
+          toast.message = this.translateService.instant('abc.toast.success.message');
           toast.present();
-          this.isLoading = false;
-        })
-      )
-      .subscribe(async (value) => {
-        if (!!value) {
-          const toast = await this.toastController.create({
-            message: this.translateService.instant('abc.toast.success.message'),
-            duration: 5000,
-            cssClass: 'fs-normal',
-            color: 'primary',
-            icon: 'checkmark-done-outline',
-            position: 'bottom',
-            swipeGesture: 'vertical'
-          });
-          toast.present();
-          this.isLoading = false;
           this.router.navigateByUrl('tabs');
         }
+      })
+      .add(() => {
+        this.isLoading = false;
       });
   }
 }
