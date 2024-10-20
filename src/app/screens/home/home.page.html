@@ -1,0 +1,16 @@
+<ion-tabs>
+  <ion-tab-bar class="tab-bar" slot="bottom">
+    <ion-tab-button class="tab-button" [tab]="PATHS.consultar">
+      <ion-icon aria-hidden="true" name="search-circle-outline"></ion-icon>
+      <ion-label>Consultar incidentes</ion-label>
+    </ion-tab-button>
+    <ion-tab-button class="tab-button" data-cy="btn-tab2" [tab]="PATHS.crear">
+      <ion-icon aria-hidden="true" name="add-circle-outline"></ion-icon>
+      <ion-label>Crear incidente</ion-label>
+    </ion-tab-button>
+    <ion-tab-button class="tab-button" [tab]="PATHS.chatbot">
+      <ion-icon aria-hidden="true" name="chatbubble-ellipses-outline"></ion-icon>
+      <ion-label>Chatbot</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

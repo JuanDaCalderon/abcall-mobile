@@ -1,11 +1,15 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {DEFAULT_LANG, LANGS} from 'src/constants';
+import {DEFAULT_LANG, LANGS} from 'src/app/constants';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  template: `
+    <ion-app>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-app>
+  `,
+  styles: ''
 })
 export class AppComponent {
   constructor(private translateService: TranslateService) {
