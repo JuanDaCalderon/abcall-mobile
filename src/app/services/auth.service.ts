@@ -8,7 +8,7 @@ import {loginUser} from 'src/app/screens/login/models';
 })
 export class AuthService {
   /** API url */
-  private urlApi = `${environment.urlApi}:${environment.portUsuario}`;
+  private urlApi = `${environment.urlApi}${environment.portUsuario}`;
   constructor(private http: HttpClient) {}
 
   /**

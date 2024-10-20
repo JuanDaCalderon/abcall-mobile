@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class IncidentesService {
-  private urlApi = `${environment.urlApi}:${environment.portCrearIncidentes}`;
+  private urlApi = `${environment.urlApi}${environment.portCrearIncidentes}`;
   constructor(private http: HttpClient) {}
 
   public crearIncidente(
