@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 20px;" />
+      {{"abc.header.login" | translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding login">
+  <app-internationalization />
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-padding">
+      <ion-col size="auto">
+        <ion-img class="logo" src="assets/img/logo.png" alt="ABCALL lOGO" />
+      </ion-col>
+      <ion-col size="auto">
+        <h1 class="title">ABCallManager</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <form [formGroup]="loginForm" (submit)="submit()">
+      <ion-row class="container-inputs">
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.login.input.email" | translate}}</label>
+          <ion-input data-cy="email-input" formControlName="email" class="ion-margin-top" aria-label="email"
+            fill="outline" placeholder="abcall@gmail.com"></ion-input>
+
+          <ion-text data-cy="email-error-required" class="fs-tiny" color="danger"
+            *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']">
+            {{ 'abc.login.input.error.required.email'| translate}}
+          </ion-text>
+          <ion-text data-cy="email-error-format" class="fs-tiny" color="danger"
+            *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']">
+            {{'abc.login.input.error.format.email'| translate}}
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding-vertical" size="12">
+          <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 21px;" />
+          <label class="fs-normal">{{"abc.login.input.password" | translate}}</label>
+          <ion-input data-cy="password-input" formControlName="password" class="ion-margin-top" aria-label="password"
+            fill="outline" type="password" placeholder="*********">
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+          <ion-text data-cy="password-error-required" class="fs-tiny" color="danger"
+            *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']">
+            {{"abc.login.input.error.required.password" | translate}}</ion-text>
+        </ion-col>
+        <ion-col class="button ion-padding-top" size="12">
+          <ion-button data-cy="submit-button" [disabled]="!loginForm.valid || isLoading" type="submit"
+            class="fs-medium ion-text-capitalize" expand="block" fill="solid">
+            <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 28px;" />
+            <span class="button-text ion-padding-vertical">
+              {{"abc.btn.login" | translate}}
+            </span>
+
+            <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
+<app-footer />

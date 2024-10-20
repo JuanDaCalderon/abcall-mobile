@@ -1,24 +1,20 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {PATHS} from './constants';
 
 const routes: Routes = [
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then((m) => m.LoginPageModule)
+    path: PATHS.login,
+    loadChildren: () => import('./screens').then((m) => m.LoginPageModule)
   },
   {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then((m) => m.TabsPageModule)
+    path: PATHS.home,
+    loadChildren: () => import('./screens').then((m) => m.HomePageModule)
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: PATHS.login,
     pathMatch: 'full'
-  },
-  {
-    path: 'crear-incidente-app-mobile',
-    loadChildren: () =>
-      import('./crear-incidente-app-mobile/crear-incidente-app-mobile.module').then((m) => m.CrearIncidenteAppMobilePageModule)
   }
 ];
 @NgModule({
