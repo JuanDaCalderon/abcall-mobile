@@ -124,7 +124,7 @@ export class CrearPage implements OnInit {
                 swipeGesture: 'vertical'
               });
               await toast.present();
-              this.router.navigate(['/login']);
+              this.router.navigate(['/home/consultar_incidentes']);
             },
             async () => {
               this.isLoading = false;
