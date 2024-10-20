@@ -4,8 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8003',
-  apiUrlCrearIncidente: 'http://localhost:8000'
+  urlApi: 'http://localhost:',
+  portRole: '8002',
+  portUsuario: '8003',
+  portConsulIncidencias: '8001',
+  portCrearIncidentes: '8000'
 };
 
 /*

@@ -8,7 +8,7 @@ import {loginUser} from 'src/app/screens/login/models';
 })
 export class AuthService {
   /** API url */
-  private apiUrl = environment.apiUrl;
+  private urlApi = `${environment.urlApi}:${environment.portUsuario}`;
   constructor(private http: HttpClient) {}
 
   /**
@@ -18,6 +18,6 @@ export class AuthService {
    * @returns {Observable<string>}
    */
   public login(email: string, password: string): Observable<loginUser> {
-    return this.http.post<loginUser>(`${this.apiUrl}/usuario/login`, {email, password});
+    return this.http.post<loginUser>(`${this.urlApi}/usuario/login`, {email, password});
   }
 }

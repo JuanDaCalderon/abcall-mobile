@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class IncidentesService {
-  private apiUrl = environment.apiUrlCrearIncidente;
+  private urlApi = `${environment.urlApi}:${environment.portCrearIncidentes}`;
   constructor(private http: HttpClient) {}
 
   public crearIncidente(
@@ -22,7 +22,7 @@ export class IncidentesService {
     issueStatus: string,
     issueComment: string
   ): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/incidentes`, {
+    return this.http.post<any>(`${this.urlApi}/incidentes`, {
       cliente: customer,
       fechacreacion: datetime,
       usuario: userName,
