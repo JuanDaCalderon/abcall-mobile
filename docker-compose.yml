@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  abcall_web:
+  abcall_mobile:
     container_name: cabcall_mobile
     build: ./
     ports:
