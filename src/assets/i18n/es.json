@@ -49,5 +49,14 @@
     "abc.crearIncidenciaAppMobile.createIssueButton": "Crear incidente",
     "abc.crearIncidenciaAppMobile.createIssueButton.message": "El incidente será creado, ¿continuar?",
     "abc.crearIncidenciaAppMobile.createIssueButton.yes": "Sí",
-    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No"
+    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No",
+    "abc.consultarIncidenciaAppMobile.header": "Mis incidentes",
+    "abc.get.issues.issue": "Incidencia",
+    "abc.get.issues.status": "Estado",
+    "abc.get.issues.priority": "Prioridad",
+    "abc.get.issues.customer": "Cliente",
+    "abc.get.issues.user": "Usuario",
+    "abc.get.issues.my.issues": "Lista de incidentes",
+    "abc.get.issues.button.view.edit": "Ver / Editar",
+    "abc.get.issues.button.close": "Cerrar"
 }

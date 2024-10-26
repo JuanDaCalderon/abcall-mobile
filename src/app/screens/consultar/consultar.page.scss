@@ -1,0 +1,41 @@
+.listar-incidencia {
+    .card {
+        background-color: #E1CFEE;
+    }
+
+    .card:hover {
+        border-color: #9517EA;
+    }
+
+    .logo {
+        width: 50px;
+        height: auto;
+    }
+
+    .title {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+
+    .label {
+        font-size: 18px;
+    }
+
+    .container-inputs {
+        --ion-margin: 10px;
+    }
+
+    .button {
+        background-color: #9517ea;
+    }
+
+    .home-icon {
+        font-size: 35px;
+        color: #9517ea;
+    }
+
+    ::ng-deep .button-dark {
+        --background: #757575 !important;
+    }
+}
