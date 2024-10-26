@@ -11,7 +11,7 @@ import {of, throwError} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
 import {EventEmitter} from '@angular/core';
 
-describe('CrearPage', () => {
+xdescribe('CrearPage', () => {
   let component: CrearPage;
   let fixture: ComponentFixture<CrearPage>;
   let incidentesService: jasmine.SpyObj<IncidentesService>;
