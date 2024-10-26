@@ -7,17 +7,15 @@ import {Router} from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {ConsultarPage} from './consultar.page';
 import {IncidentesService} from 'src/app/services';
-import {of, throwError} from 'rxjs';
+import {of} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
 import {EventEmitter} from '@angular/core';
 import {Incidente} from 'src/app/models/incidentes.model';
-import {Usuario} from 'src/app/models/usuario.model';
 
 describe('ConsultarPage', () => {
   let component: ConsultarPage;
   let fixture: ComponentFixture<ConsultarPage>;
   let incidentesService: jasmine.SpyObj<IncidentesService>;
-  let toastController: jasmine.SpyObj<any>;
   let alertController: jasmine.SpyObj<any>;
   let router: jasmine.SpyObj<Router>;
 
@@ -63,7 +61,6 @@ describe('ConsultarPage', () => {
     fixture = TestBed.createComponent(ConsultarPage);
     component = fixture.componentInstance;
     incidentesService = TestBed.inject(IncidentesService) as jasmine.SpyObj<IncidentesService>;
-    toastController = TestBed.inject(ToastController) as jasmine.SpyObj<any>;
     alertController = TestBed.inject(AlertController) as jasmine.SpyObj<any>;
     router = TestBed.inject(Router) as jasmine.SpyObj<any>;
 
