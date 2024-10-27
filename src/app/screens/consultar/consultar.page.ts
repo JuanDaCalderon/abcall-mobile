@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs';
 import {DEFAULT_LANG} from 'src/app/constants';
@@ -10,10 +10,9 @@ import {AlertController} from '@ionic/angular';
 @Component({
   selector: 'app-consultar',
   templateUrl: './consultar.page.html',
-  styleUrls: ['./consultar.page.scss'],
-  providers: [IncidentesService]
+  styleUrls: ['./consultar.page.scss']
 })
-export class ConsultarPage implements OnInit {
+export class ConsultarPage {
   public hasLoadTranslations: boolean = false;
   public isLoading: boolean = false;
   public incidencias: Incidente[] = [];
@@ -23,23 +22,13 @@ export class ConsultarPage implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     private alertController: AlertController
-  ) {}
-
-  ngOnInit() {
-    this.initializeTranslations();
-    this.getIncidencias();
-  }
-
-  private initializeTranslations() {
+  ) {
     this.translateService
       .getTranslation(DEFAULT_LANG)
       .pipe(take(1))
       .subscribe((lang) => {
         this.hasLoadTranslations = !!lang;
       });
-  }
-
-  public getIncidencias() {
     this.consultarService.getIncidencias().subscribe((data: Incidente[]) => {
       this.incidencias = data;
     });

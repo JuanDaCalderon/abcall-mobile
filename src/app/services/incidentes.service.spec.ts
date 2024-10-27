@@ -100,4 +100,62 @@ describe('IncidentesService', () => {
     });
     req.flush(dummyResponse);
   });
+
+  it('should get incidents', () => {
+    const incidenteData = {
+      id: '1',
+      cliente: {
+        id: '1',
+        email: '',
+        username: '',
+        password: '',
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        direccion: '',
+        gestortier: '',
+        token: '',
+        rol: {
+          id: 4,
+          nombre: 'cliente',
+          permisos: []
+        }
+      },
+      fechacreacion: '2023-10-01',
+      usuario: {
+        id: '2',
+        email: '',
+        username: '',
+        password: '',
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        direccion: '',
+        gestortier: '',
+        token: '',
+        rol: {
+          id: 2,
+          nombre: 'cliente',
+          permisos: []
+        }
+      },
+      correo: 'prueba@prueba.com',
+      direccion: 'Test address',
+      telefono: '123456789',
+      descripcion: 'Test description',
+      prioridad: 'High',
+      estado: 'Open',
+      comentarios: 'Test comments',
+      canal: 'web',
+      tipo: 'icidencia'
+    };
+    subscriptions.push(
+      service.getIncidencias().subscribe((response) => {
+        expect(response).toEqual([incidenteData]);
+      })
+    );
+    const req = httpMock.expectOne(`${environment.urlApi}${environment.portConsulIncidencias}/incidentes`);
+    expect(req.request.method).toBe('GET');
+    req.flush([incidenteData]);
+  });
 });

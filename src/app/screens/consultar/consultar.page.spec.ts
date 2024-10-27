@@ -1,24 +1,21 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
-import {RouterTestingModule} from '@angular/router/testing';
-import {ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule, TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import {Router} from '@angular/router';
-import {ToastController, AlertController} from '@ionic/angular';
 import {ConsultarPage} from './consultar.page';
-import {IncidentesService} from 'src/app/services';
-import {of} from 'rxjs';
-import {HttpClientModule} from '@angular/common/http';
+import {LangChangeEvent, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {IncidentesService} from 'src/app/services/incidentes.service';
+import {Router} from '@angular/router';
+import {AlertController, IonicModule} from '@ionic/angular';
 import {EventEmitter} from '@angular/core';
-import {Incidente} from 'src/app/models/incidentes.model';
-
+import {of} from 'rxjs';
+import {ReactiveFormsModule} from '@angular/forms';
 describe('ConsultarPage', () => {
   let component: ConsultarPage;
   let fixture: ComponentFixture<ConsultarPage>;
-  let incidentesService: jasmine.SpyObj<IncidentesService>;
+  let router: Router;
   let alertController: jasmine.SpyObj<any>;
-  let router: jasmine.SpyObj<Router>;
-
+  const consultarService = jasmine.createSpyObj('IncidentesService', ['getIncidencias']);
+  const consultarServiceMock = {
+    getIncidencias: consultarService.getIncidencias.and.returnValue(of({id: 1}))
+  };
   const translateService = jasmine.createSpyObj('TranslateService', [
     'instant',
     'get',
@@ -33,38 +30,29 @@ describe('ConsultarPage', () => {
     use: translateService.use,
     instant: translateService.instant.and.returnValue(''),
     get: translateService.get.and.returnValue(of('')),
-    getTranslation: translateService.getTranslation.and.returnValue(of({'abc.get.issues.issue': 'get.issues.issue'})),
+    getTranslation: translateService.getTranslation.and.returnValue(of({'abc.crearIncidenciaAppMobile': 'crearIncidenciaAppMobile'})),
     getLangs: translateService.getLangs.and.returnValue(['en', 'es']),
     getDefaultLang: translateService.getDefaultLang.and.returnValue('en'),
     onTranslationChange: new EventEmitter(),
     onDefaultLangChange: new EventEmitter()
   };
-
   beforeEach(async () => {
-    const incidentesServiceSpy = jasmine.createSpyObj('IncidentesService', ['getIncidencias']);
-    const toastControllerSpy = jasmine.createSpyObj('ToastController', ['create']);
-    const alertControllerSpy = jasmine.createSpyObj('AlertController', ['create']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
+    const alertControllerSpy = jasmine.createSpyObj('AlertController', ['create']);
     await TestBed.configureTestingModule({
       declarations: [ConsultarPage],
-      imports: [IonicModule.forRoot(), RouterTestingModule, ReactiveFormsModule, TranslateModule.forRoot(), HttpClientModule],
+      imports: [IonicModule.forRoot(), ReactiveFormsModule, TranslateModule.forRoot()],
       providers: [
         {provide: TranslateService, useValue: translateServiceMock},
-        {provide: IncidentesService, useValue: incidentesServiceSpy},
-        {provide: ToastController, useValue: toastControllerSpy},
-        {provide: AlertController, useValue: alertControllerSpy},
-        {provide: Router, useValue: routerSpy}
+        {provide: IncidentesService, useValue: consultarServiceMock},
+        {provide: Router, useValue: routerSpy},
+        {provide: AlertController, useValue: alertControllerSpy}
       ]
     }).compileComponents();
-
     fixture = TestBed.createComponent(ConsultarPage);
     component = fixture.componentInstance;
-    incidentesService = TestBed.inject(IncidentesService) as jasmine.SpyObj<IncidentesService>;
+    router = TestBed.inject(Router);
     alertController = TestBed.inject(AlertController) as jasmine.SpyObj<any>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<any>;
-
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -79,63 +67,5 @@ describe('ConsultarPage', () => {
     const handler = alertController.create.calls.mostRecent().args[0].buttons[1].handler;
     handler();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
-  });
-
-  it('should set incidencias correctly on successful getIncidencias call', () => {
-    const mockIncidencias: Incidente[] = [
-      {
-        id: '1',
-        cliente: {
-          id: '1',
-          email: '',
-          username: '',
-          password: '',
-          nombres: '',
-          apellidos: '',
-          telefono: '',
-          direccion: '',
-          gestortier: '',
-          token: '',
-          rol: {
-            id: 4,
-            nombre: 'cliente',
-            permisos: []
-          }
-        },
-        fechacreacion: '2023-10-01',
-        usuario: {
-          id: '2',
-          email: '',
-          username: '',
-          password: '',
-          nombres: '',
-          apellidos: '',
-          telefono: '',
-          direccion: '',
-          gestortier: '',
-          token: '',
-          rol: {
-            id: 2,
-            nombre: 'cliente',
-            permisos: []
-          }
-        },
-        correo: 'prueba@prueba.com',
-        direccion: 'Test address',
-        telefono: '123456789',
-        descripcion: 'Test description',
-        prioridad: 'High',
-        estado: 'Open',
-        comentarios: 'Test comments',
-        canal: 'web',
-        tipo: 'icidencia'
-      }
-    ];
-
-    incidentesService.getIncidencias.and.returnValue(of(mockIncidencias));
-
-    component['getIncidencias']();
-
-    expect(component.incidencias.length).toBe(0);
   });
 });

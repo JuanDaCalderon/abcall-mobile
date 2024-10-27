@@ -16,7 +16,7 @@ export class IncidentesService {
     return this.http.post<any>(`${this.urlApi}/incidentes`, incidente);
   }
 
-  getIncidencias(): Observable<Incidente[]> {
+  public getIncidencias(): Observable<Incidente[]> {
     return this.http.get<Incidente[]>(`${this.urlApiConsultar}/incidentes`);
   }
 }
