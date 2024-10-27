@@ -13,7 +13,7 @@
       <app-internationalization />
     </ion-col>
     <ion-col size="auto">
-      <ion-icon class="home-icon" name="home"></ion-icon>
+      <ion-icon class="home-icon" name="home" (click)="home()"></ion-icon>
     </ion-col>
   </ion-row>
   <ion-grid>
@@ -153,15 +153,20 @@
             translate}}</ion-button>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col class="crear-incidencia">
-          <ion-button class="button-dark" expand="block"
-            (click)="cerrarSesion()">{{"abc.crearIncidenciaAppMobile.logout" | translate}}</ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-label class="ion-padding">Pepito Pérez (Usuario)</ion-label>
-        </ion-col>
-      </ion-row>
     </form>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="crear-incidencia">
+        <ion-button class="button-dark" expand="block"
+          (click)="cerrarSesion()">{{"abc.crearIncidenciaAppMobile.logout" | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-label class="ion-padding">Pepito Pérez (Usuario)</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

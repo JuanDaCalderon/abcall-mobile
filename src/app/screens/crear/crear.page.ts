@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {DEFAULT_LANG} from 'src/app/constants';
 import {IncidentesService} from 'src/app/services/incidentes.service';
+import {Incidente} from 'src/app/models/incidentes.model';
 
 @Component({
   selector: 'app-crear',
@@ -51,6 +52,10 @@ export class CrearPage implements OnInit {
       });
   }
 
+  public home() {
+    this.router.navigate(['/home']);
+  }
+
   private formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -68,7 +73,7 @@ export class CrearPage implements OnInit {
       if (!isNaN(dateObject.getTime())) {
         const formattedDatetime = this.formatDate(dateObject);
 
-        const incidenteData = {
+        const incidenteData: Incidente = {
           cliente: this.crearIncidenciaForm.get('customer')?.value,
           fechacreacion: formattedDatetime,
           usuario: this.crearIncidenciaForm.get('userName')?.value,
@@ -78,22 +83,14 @@ export class CrearPage implements OnInit {
           descripcion: this.crearIncidenciaForm.get('issueDescription')?.value,
           prioridad: this.crearIncidenciaForm.get('issuePriority')?.value,
           estado: this.crearIncidenciaForm.get('issueStatus')?.value,
-          comentarios: this.crearIncidenciaForm.get('issueComment')?.value
+          comentarios: this.crearIncidenciaForm.get('issueComment')?.value,
+          id: '',
+          canal: 'Mobile',
+          tipo: 'Incidente'
         };
         this.isLoading = true;
         this.incidentesService
-          .crearIncidente(
-            incidenteData.cliente,
-            incidenteData.fechacreacion,
-            incidenteData.usuario,
-            incidenteData.correo,
-            incidenteData.direccion,
-            incidenteData.telefono,
-            incidenteData.descripcion,
-            incidenteData.prioridad,
-            incidenteData.estado,
-            incidenteData.comentarios
-          )
+          .crearIncidente(incidenteData)
           .pipe(
             take(1),
             catchError(async (error) => {
