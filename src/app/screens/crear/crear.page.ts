@@ -50,7 +50,7 @@ export class CrearPage implements OnInit {
     this.loadUsersByRol('4');
   }
 
-  private initializeTranslations() {
+  public initializeTranslations() {
     this.translateService
       .getTranslation(DEFAULT_LANG)
       .pipe(take(1))
