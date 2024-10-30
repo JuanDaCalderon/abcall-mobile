@@ -6,7 +6,7 @@ import {TranslateModule, TranslateService, LangChangeEvent} from '@ngx-translate
 import {Router} from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {CrearPage} from './crear.page';
-import {IncidentesService} from 'src/app/services';
+import {AuthService, IncidentesService} from 'src/app/services';
 import {of, throwError} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
 import {EventEmitter} from '@angular/core';
@@ -14,6 +14,7 @@ import {EventEmitter} from '@angular/core';
 describe('CrearPage', () => {
   let component: CrearPage;
   let fixture: ComponentFixture<CrearPage>;
+  let authService: jasmine.SpyObj<AuthService>;
   let incidentesService: jasmine.SpyObj<IncidentesService>;
   let toastController: jasmine.SpyObj<any>;
   let alertController: jasmine.SpyObj<any>;
@@ -41,6 +42,7 @@ describe('CrearPage', () => {
   };
 
   beforeEach(async () => {
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUsers']);
     const incidentesServiceSpy = jasmine.createSpyObj('IncidentesService', ['crearIncidente']);
     const toastControllerSpy = jasmine.createSpyObj('ToastController', ['create']);
     const alertControllerSpy = jasmine.createSpyObj('AlertController', ['create']);
@@ -60,6 +62,7 @@ describe('CrearPage', () => {
 
     fixture = TestBed.createComponent(CrearPage);
     component = fixture.componentInstance;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     incidentesService = TestBed.inject(IncidentesService) as jasmine.SpyObj<IncidentesService>;
     toastController = TestBed.inject(ToastController) as jasmine.SpyObj<any>;
     alertController = TestBed.inject(AlertController) as jasmine.SpyObj<any>;
@@ -76,26 +79,26 @@ describe('CrearPage', () => {
     expect(component.crearIncidenciaForm).toBeDefined();
     const controls = component.crearIncidenciaForm.controls;
     expect(controls['customer']).toBeDefined();
-    expect(controls['datetime']).toBeDefined();
     expect(controls['userName']).toBeDefined();
     expect(controls['email']).toBeDefined();
     expect(controls['userAddress']).toBeDefined();
     expect(controls['phoneNumber']).toBeDefined();
     expect(controls['issueDescription']).toBeDefined();
     expect(controls['issuePriority']).toBeDefined();
-    expect(controls['issueStatus']).toBeDefined();
+    expect(controls['issueType']).toBeDefined();
+    expect(controls['issueComment']).toBeDefined();
   });
 
   it('should call submit on confirmation', async () => {
     component.crearIncidenciaForm.controls['customer'].setValue('Test Customer');
-    component.crearIncidenciaForm.controls['datetime'].setValue(new Date().toISOString());
     component.crearIncidenciaForm.controls['userName'].setValue('Test User');
     component.crearIncidenciaForm.controls['email'].setValue('test@example.com');
     component.crearIncidenciaForm.controls['userAddress'].setValue('Test Address');
     component.crearIncidenciaForm.controls['phoneNumber'].setValue('1234567890');
     component.crearIncidenciaForm.controls['issueDescription'].setValue('Test Description');
     component.crearIncidenciaForm.controls['issuePriority'].setValue('High');
-    component.crearIncidenciaForm.controls['issueStatus'].setValue('Open');
+    component.crearIncidenciaForm.controls['issueType'].setValue('Issue');
+    component.crearIncidenciaForm.controls['issueComment'].setValue('Test Comment');
 
     const alertSpy = jasmine.createSpyObj('HTMLIonAlertElement', ['present']);
     alertController.create.and.returnValue(Promise.resolve(alertSpy));
@@ -110,14 +113,14 @@ describe('CrearPage', () => {
 
   it('should call incidentesService.crearIncidente on submit', async () => {
     component.crearIncidenciaForm.controls['customer'].setValue('Test Customer');
-    component.crearIncidenciaForm.controls['datetime'].setValue(new Date().toISOString());
     component.crearIncidenciaForm.controls['userName'].setValue('Test User');
     component.crearIncidenciaForm.controls['email'].setValue('test@example.com');
     component.crearIncidenciaForm.controls['userAddress'].setValue('Test Address');
     component.crearIncidenciaForm.controls['phoneNumber'].setValue('1234567890');
     component.crearIncidenciaForm.controls['issueDescription'].setValue('Test Description');
     component.crearIncidenciaForm.controls['issuePriority'].setValue('High');
-    component.crearIncidenciaForm.controls['issueStatus'].setValue('Open');
+    component.crearIncidenciaForm.controls['issueType'].setValue('Issue');
+    component.crearIncidenciaForm.controls['issueComment'].setValue('Test Comment');
 
     incidentesService.crearIncidente.and.returnValue(of({}));
 
@@ -127,14 +130,14 @@ describe('CrearPage', () => {
 
   it('should show error toast on failed submit', async () => {
     component.crearIncidenciaForm.controls['customer'].setValue('Test Customer');
-    component.crearIncidenciaForm.controls['datetime'].setValue(new Date().toISOString());
     component.crearIncidenciaForm.controls['userName'].setValue('Test User');
     component.crearIncidenciaForm.controls['email'].setValue('test@example.com');
     component.crearIncidenciaForm.controls['userAddress'].setValue('Test Address');
     component.crearIncidenciaForm.controls['phoneNumber'].setValue('1234567890');
     component.crearIncidenciaForm.controls['issueDescription'].setValue('Test Description');
     component.crearIncidenciaForm.controls['issuePriority'].setValue('High');
-    component.crearIncidenciaForm.controls['issueStatus'].setValue('Open');
+    component.crearIncidenciaForm.controls['issueType'].setValue('Issue');
+    component.crearIncidenciaForm.controls['issueComment'].setValue('Test Comment');
 
     incidentesService.crearIncidente.and.returnValue(throwError({error: {message: 'Error'}}));
     const toastSpy = jasmine.createSpyObj('HTMLIonToastElement', ['present']);
@@ -165,14 +168,14 @@ describe('CrearPage', () => {
 
   it('should show confirmation alert if form is valid on confirm', async () => {
     component.crearIncidenciaForm.controls['customer'].setValue('Test Customer');
-    component.crearIncidenciaForm.controls['datetime'].setValue(new Date().toISOString());
     component.crearIncidenciaForm.controls['userName'].setValue('Test User');
     component.crearIncidenciaForm.controls['email'].setValue('test@example.com');
     component.crearIncidenciaForm.controls['userAddress'].setValue('Test Address');
     component.crearIncidenciaForm.controls['phoneNumber'].setValue('1234567890');
     component.crearIncidenciaForm.controls['issueDescription'].setValue('Test Description');
     component.crearIncidenciaForm.controls['issuePriority'].setValue('High');
-    component.crearIncidenciaForm.controls['issueStatus'].setValue('Open');
+    component.crearIncidenciaForm.controls['issueType'].setValue('Issue');
+    component.crearIncidenciaForm.controls['issueComment'].setValue('Test Comment');
 
     const alertSpy = jasmine.createSpyObj('HTMLIonAlertElement', ['present']);
     alertController.create.and.returnValue(Promise.resolve(alertSpy));
@@ -229,5 +232,10 @@ describe('CrearPage', () => {
     const handler = alertController.create.calls.mostRecent().args[0].buttons[1].handler;
     handler();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should navigate to /home/consultar_incidentes when home is called', () => {
+    component.home();
+    expect(router.navigate).toHaveBeenCalledWith(['/home/consultar_incidentes']);
   });
 });

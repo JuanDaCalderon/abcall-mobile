@@ -7,6 +7,8 @@ import {ToastController, AlertController} from '@ionic/angular';
 import {DEFAULT_LANG} from 'src/app/constants';
 import {IncidentesService} from 'src/app/services/incidentes.service';
 import {Incidente} from 'src/app/models/incidentes.model';
+import {AuthService} from 'src/app/services/auth.service';
+import {Usuario} from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-crear',
@@ -17,30 +19,35 @@ export class CrearPage implements OnInit {
   public crearIncidenciaForm: FormGroup = new FormGroup('');
   public hasLoadTranslations: boolean = false;
   public isLoading: boolean = false;
+  public usuarios: Usuario[] = [];
+  public clientes: Usuario[] = [];
+  public usuario: Usuario;
   constructor(
     private incidentesService: IncidentesService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
     private router: Router,
     private toastController: ToastController,
     private alertController: AlertController
   ) {
+    this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     this.crearIncidenciaForm = this.formBuilder.group({
       customer: ['', [Validators.required]],
-      datetime: [new Date().toISOString(), [Validators.required]],
-      userName: ['', [Validators.required]],
+      userName: [''],
       email: ['', [Validators.required, Validators.email]],
       userAddress: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9 ]*')]],
       issueDescription: ['', [Validators.required]],
       issuePriority: ['', [Validators.required]],
-      issueStatus: ['', [Validators.required]],
+      issueType: ['', [Validators.required]],
       issueComment: []
     });
   }
 
   ngOnInit() {
     this.initializeTranslations();
+    this.loadUsersByRol('4');
   }
 
   private initializeTranslations() {
@@ -53,82 +60,66 @@ export class CrearPage implements OnInit {
   }
 
   public home() {
-    this.router.navigate(['/home']);
-  }
-
-  private formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const seconds = ('0' + date.getSeconds()).slice(-2);
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    this.router.navigate(['/home/consultar_incidentes']);
   }
 
   public async submit() {
-    const datetimeValue = this.crearIncidenciaForm.get('datetime')?.value;
-    if (datetimeValue) {
-      const dateObject = new Date(datetimeValue);
-      if (!isNaN(dateObject.getTime())) {
-        const formattedDatetime = this.formatDate(dateObject);
-
-        const incidenteData: Incidente = {
-          cliente: this.crearIncidenciaForm.get('customer')?.value,
-          fechacreacion: formattedDatetime,
-          usuario: this.crearIncidenciaForm.get('userName')?.value,
-          correo: this.crearIncidenciaForm.get('email')?.value,
-          direccion: this.crearIncidenciaForm.get('userAddress')?.value,
-          telefono: this.crearIncidenciaForm.get('phoneNumber')?.value,
-          descripcion: this.crearIncidenciaForm.get('issueDescription')?.value,
-          prioridad: this.crearIncidenciaForm.get('issuePriority')?.value,
-          estado: this.crearIncidenciaForm.get('issueStatus')?.value,
-          comentarios: this.crearIncidenciaForm.get('issueComment')?.value,
-          id: '',
-          canal: 'Mobile',
-          tipo: 'Incidente'
-        };
-        this.isLoading = true;
-        this.incidentesService
-          .crearIncidente(incidenteData)
-          .pipe(
-            take(1),
-            catchError(async (error) => {
-              const errorMsg: string = `${this.translateService.instant('abc.crearIncidenciaAppMobile.incorrect.message')} ${error && error.error?.message ? (error.error?.message as string).toLowerCase() : ''}`;
-              const toast = await this.toastController.create({
-                message: errorMsg,
-                duration: 5000,
-                cssClass: 'fs-normal',
-                color: 'danger',
-                icon: 'alert-circle-outline',
-                position: 'bottom',
-                swipeGesture: 'vertical'
-              });
-              await toast.present();
-              throw error;
-            })
-          )
-          .subscribe(
-            async () => {
-              this.isLoading = false;
-              const toast = await this.toastController.create({
-                message: this.translateService.instant('abc.crearIncidenciaAppMobile.success.message'),
-                duration: 2000,
-                cssClass: 'fs-normal',
-                color: 'success',
-                icon: 'checkmark-circle-outline',
-                position: 'bottom',
-                swipeGesture: 'vertical'
-              });
-              await toast.present();
-              this.router.navigate(['/home/consultar_incidentes']);
-            },
-            async () => {
-              this.isLoading = false;
-            }
-          );
-      }
-    }
+    const incidenteData = {
+      cliente: this.crearIncidenciaForm.get('customer')?.value,
+      usuario: this.usuario.id,
+      gestor: '',
+      correo: this.crearIncidenciaForm.get('email')?.value,
+      direccion: this.crearIncidenciaForm.get('userAddress')?.value,
+      telefono: this.crearIncidenciaForm.get('phoneNumber')?.value,
+      descripcion: this.crearIncidenciaForm.get('issueDescription')?.value,
+      prioridad: this.crearIncidenciaForm.get('issuePriority')?.value,
+      estado: 'abierto',
+      tipo: this.crearIncidenciaForm.get('issueType')?.value,
+      comentarios: this.crearIncidenciaForm.get('issueComment')?.value,
+      id: '',
+      canal: 'mobile',
+      fechacreacion: ''
+    };
+    this.isLoading = true;
+    this.incidentesService
+      .crearIncidente(incidenteData)
+      .pipe(
+        take(1),
+        catchError(async (error) => {
+          const errorMsg: string = `${this.translateService.instant('abc.crearIncidenciaAppMobile.incorrect.message')} ${error && error.error?.message ? (error.error?.message as string).toLowerCase() : ''}`;
+          const toast = await this.toastController.create({
+            message: errorMsg,
+            duration: 5000,
+            cssClass: 'fs-normal',
+            color: 'danger',
+            icon: 'alert-circle-outline',
+            position: 'bottom',
+            swipeGesture: 'vertical'
+          });
+          await toast.present();
+          throw error;
+        })
+      )
+      .subscribe(
+        async () => {
+          this.isLoading = false;
+          const toast = await this.toastController.create({
+            message: this.translateService.instant('abc.crearIncidenciaAppMobile.success.message'),
+            duration: 2000,
+            cssClass: 'fs-normal',
+            color: 'success',
+            icon: 'checkmark-circle-outline',
+            position: 'bottom',
+            swipeGesture: 'vertical'
+          });
+          await toast.present();
+          this.crearIncidenciaForm.reset();
+          this.router.navigate(['/home/consultar_incidentes']);
+        },
+        async () => {
+          this.isLoading = false;
+        }
+      );
   }
 
   async confirmarCrearIncidente() {
@@ -182,6 +173,8 @@ export class CrearPage implements OnInit {
         {
           text: this.translateService.instant('abc.crearIncidenciaAppMobile.logout.yes'),
           handler: () => {
+            this.crearIncidenciaForm.reset();
+            localStorage.removeItem('usuario');
             this.router.navigate(['/login']);
           }
         }
@@ -189,5 +182,22 @@ export class CrearPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  loadUsersByRol(rol: string): void {
+    this.authService
+      .getUsers(rol)
+      .pipe(take(1))
+      .subscribe(
+        async (usuarios) => {
+          this.isLoading = false;
+          if (rol === '4') this.clientes = usuarios;
+          else this.usuarios = usuarios;
+          console.log(this.clientes);
+        },
+        async () => {
+          this.isLoading = false;
+        }
+      );
   }
 }
