@@ -188,16 +188,11 @@ export class CrearPage implements OnInit {
     this.authService
       .getUsers(rol)
       .pipe(take(1))
-      .subscribe(
-        async (usuarios) => {
-          this.isLoading = false;
-          if (rol === '4') this.clientes = usuarios;
-          else this.usuarios = usuarios;
-          console.log(this.clientes);
-        },
-        async () => {
-          this.isLoading = false;
-        }
-      );
+      .subscribe(async (usuarios) => {
+        this.isLoading = false;
+        if (rol === '4') this.clientes = usuarios;
+        else this.usuarios = usuarios;
+        console.log(this.clientes);
+      });
   }
 }
