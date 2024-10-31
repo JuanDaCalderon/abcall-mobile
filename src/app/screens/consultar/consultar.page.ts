@@ -6,6 +6,7 @@ import {Incidente} from 'src/app/models/incidentes.model';
 import {IncidentesService} from 'src/app/services/incidentes.service';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
+import {Usuario} from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-consultar',
@@ -16,6 +17,7 @@ export class ConsultarPage {
   public hasLoadTranslations: boolean = false;
   public isLoading: boolean = false;
   public incidencias: Incidente[] = [];
+  public usuario: Usuario;
 
   constructor(
     private consultarService: IncidentesService,
@@ -23,6 +25,7 @@ export class ConsultarPage {
     private router: Router,
     private alertController: AlertController
   ) {
+    this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     this.translateService
       .getTranslation(DEFAULT_LANG)
       .pipe(take(1))
@@ -48,6 +51,7 @@ export class ConsultarPage {
         {
           text: this.translateService.instant('abc.crearIncidenciaAppMobile.logout.yes'),
           handler: () => {
+            localStorage.removeItem('usuario');
             this.router.navigate(['/login']);
           }
         }

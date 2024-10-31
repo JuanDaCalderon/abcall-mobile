@@ -51,6 +51,7 @@ export class LoginPage {
         if (!!loginUser && !!loginUser.token) {
           toast.message = this.translateService.instant('abc.toast.success.message');
           toast.present();
+          localStorage.setItem('usuario', JSON.stringify(loginUser));
           this.router.navigateByUrl('home');
         }
       })

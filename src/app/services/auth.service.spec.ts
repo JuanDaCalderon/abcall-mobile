@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {provideHttpClient} from '@angular/common/http';
 import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {environment} from 'src/environments/environment';
+import {Usuario} from '../models/usuario.model';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -43,5 +44,34 @@ describe('AuthService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({email, password});
     req.flush(mockResponse);
+  });
+
+  it('should get users by role', () => {
+    const mockUsers: Usuario[] = [
+      {
+        id: '1',
+        email: '',
+        username: '',
+        password: '',
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        direccion: '',
+        gestortier: '',
+        token: '',
+        rol: {id: 4, nombre: '', permisos: []}
+      }
+    ];
+    const rol = '4';
+
+    subscriptions.push(
+      service.getUsers(rol).subscribe((users) => {
+        expect(users).toEqual(mockUsers);
+      })
+    );
+
+    const req = httpMock.expectOne(`${environment.urlApi}${environment.portUsuario}/usuarios/${rol}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUsers);
   });
 });

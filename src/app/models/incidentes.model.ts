@@ -14,6 +14,24 @@ export class Incidente {
     public telefono: string,
     public usuario: Usuario,
     public tipo: string,
-    public canal: string
+    public canal: string,
+    public gestor: string
   ) {}
+}
+
+export interface IncidenteRequest {
+  cliente: string;
+  usuario: string;
+  gestor: string;
+  correo: string;
+  direccion: string;
+  telefono: string;
+  descripcion: string;
+  prioridad: string;
+  estado: string;
+  tipo: string;
+  comentarios: string;
+  id: string;
+  canal: string;
+  fechacreacion: string;
 }

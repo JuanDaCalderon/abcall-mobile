@@ -31,50 +31,19 @@ describe('IncidentesService', () => {
     const dummyResponse = {success: true};
     const incidenteData = {
       id: '1',
-      cliente: {
-        id: '1',
-        email: '',
-        username: '',
-        password: '',
-        nombres: '',
-        apellidos: '',
-        telefono: '',
-        direccion: '',
-        gestortier: '',
-        token: '',
-        rol: {
-          id: 4,
-          nombre: 'cliente',
-          permisos: []
-        }
-      },
+      cliente: '',
       fechacreacion: '2023-10-01',
-      usuario: {
-        id: '2',
-        email: '',
-        username: '',
-        password: '',
-        nombres: '',
-        apellidos: '',
-        telefono: '',
-        direccion: '',
-        gestortier: '',
-        token: '',
-        rol: {
-          id: 2,
-          nombre: 'cliente',
-          permisos: []
-        }
-      },
+      usuario: '',
       correo: 'prueba@prueba.com',
       direccion: 'Test address',
       telefono: '123456789',
       descripcion: 'Test description',
-      prioridad: 'High',
-      estado: 'Open',
+      prioridad: 'alta',
+      estado: 'abierta',
       comentarios: 'Test comments',
-      canal: 'web',
-      tipo: 'icidencia'
+      canal: 'mobile',
+      tipo: 'incidencia',
+      gestor: ''
     };
     subscriptions.push(
       service.crearIncidente(incidenteData).subscribe((response) => {
@@ -96,7 +65,8 @@ describe('IncidentesService', () => {
       estado: incidenteData.estado,
       comentarios: incidenteData.comentarios,
       canal: incidenteData.canal,
-      tipo: incidenteData.tipo
+      tipo: incidenteData.tipo,
+      gestor: incidenteData.gestor
     });
     req.flush(dummyResponse);
   });
@@ -113,6 +83,7 @@ describe('IncidentesService', () => {
         apellidos: '',
         telefono: '',
         direccion: '',
+        gestor: '',
         gestortier: '',
         token: '',
         rol: {
@@ -147,7 +118,8 @@ describe('IncidentesService', () => {
       estado: 'Open',
       comentarios: 'Test comments',
       canal: 'web',
-      tipo: 'icidencia'
+      tipo: 'icidencia',
+      gestor: ''
     };
     subscriptions.push(
       service.getIncidencias().subscribe((response) => {
