@@ -9,6 +9,7 @@ import {of} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Usuario} from 'src/app/models/usuario.model';
 import {Incidente} from 'src/app/models/incidentes.model';
+
 describe('ConsultarPage', () => {
   let component: ConsultarPage;
   let fixture: ComponentFixture<ConsultarPage>;
@@ -72,21 +73,59 @@ describe('ConsultarPage', () => {
   });
 
   it('should filter incidencias by logged-in user', () => {
-    const mockUsers: Usuario[] = [
+    const mockUsuario: Usuario = {
+      id: '1',
+      email: 'user@example.com',
+      username: 'user',
+      password: 'password',
+      nombres: 'User',
+      apellidos: 'Example',
+      telefono: '1234567890',
+      direccion: 'Address',
+      gestortier: 'Tier',
+      token: 'token',
+      rol: {id: 1, nombre: 'User', permisos: []}
+    };
+
+    const mockIncidencias: Incidente[] = [
       {
         id: '1',
-        email: '',
-        username: '',
-        password: '',
-        nombres: '',
-        apellidos: '',
-        telefono: '',
+        estado: 'open',
+        prioridad: 'high',
+        cliente: mockUsuario,
+        usuario: mockUsuario,
+        comentarios: '',
+        correo: '',
+        descripcion: '',
         direccion: '',
-        gestortier: '',
-        token: '',
-        rol: {id: 4, nombre: '', permisos: []}
+        fechacreacion: '',
+        telefono: '',
+        tipo: '',
+        canal: '',
+        gestor: ''
+      },
+      {
+        id: '2',
+        estado: 'closed',
+        prioridad: 'low',
+        cliente: mockUsuario,
+        usuario: {...mockUsuario, id: '2'},
+        comentarios: '',
+        correo: '',
+        descripcion: '',
+        direccion: '',
+        fechacreacion: '',
+        telefono: '',
+        tipo: '',
+        canal: '',
+        gestor: ''
       }
     ];
-    expect(component.incidencias).toEqual([]);
+
+    localStorage.setItem('usuario', JSON.stringify(mockUsuario));
+    consultarService.getIncidencias.and.returnValue(of(mockIncidencias));
+
+    fixture.detectChanges();
+    expect(component.incidencias.length).toBe(0);
   });
 });
