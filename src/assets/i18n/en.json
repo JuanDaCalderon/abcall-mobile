@@ -35,6 +35,9 @@
     "abc.crearIncidenciaAppMobile.issuePriority": "Issue priority",
     "abc.crearIncidenciaAppMobile.error.required.issuePriority": "Issue priority is required",
     "abc.crearIncidenciaAppMobile.issuePriority.placeholder.message": "Enter issue priority",
+    "abc.crearIncidenciaAppMobile.issueType": "Issue type",
+    "abc.crearIncidenciaAppMobile.error.required.issueType": "Issue type is required",
+    "abc.crearIncidenciaAppMobile.issueType.placeholder.message": "Enter issue type",
     "abc.crearIncidenciaAppMobile.issueStatus": "Issue status",
     "abc.crearIncidenciaAppMobile.error.required.issueStatus": "Issue status is required",
     "abc.crearIncidenciaAppMobile.issueStatus.placeholder.message": "Enter issue status",
@@ -49,5 +52,15 @@
     "abc.crearIncidenciaAppMobile.createIssueButton": "Create issue",
     "abc.crearIncidenciaAppMobile.createIssueButton.message": "The issue will be created, continue?",
     "abc.crearIncidenciaAppMobile.createIssueButton.yes": "Yes",
-    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No"
+    "abc.crearIncidenciaAppMobile.createIssueButton.no": "No",
+    "abc.consultarIncidenciaAppMobile.header": "My issues",
+    "abc.get.issues.issue": "Issue",
+    "abc.get.issues.status": "Status",
+    "abc.get.issues.priority": "Priority",
+    "abc.get.issues.customer": "Customer",
+    "abc.get.issues.user": "User",
+    "abc.get.issues.my.issues": "Issues list",
+    "abc.get.issues.button.view.edit": "View / Edit",
+    "abc.get.issues.button.close": "Close"
+
 }

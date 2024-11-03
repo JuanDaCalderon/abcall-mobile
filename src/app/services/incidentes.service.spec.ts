@@ -30,38 +30,30 @@ describe('IncidentesService', () => {
   it('should create an incident', () => {
     const dummyResponse = {success: true};
     const incidenteData = {
-      cliente: 'Cliente 1',
-      fechacreacion: '2024-10-13 23:04:30',
-      usuario: 'Pepito Perez',
-      correo: 'pepitoperez@pepitoperez.com',
-      direccion: 'Dirección de Pepito Perez',
-      telefono: '3005552222',
-      descripcion: 'Incidente de prueba',
-      prioridad: 'Media',
-      estado: 'Abierto',
-      comentarios: 'Comentario de incidente de prueba'
+      id: '1',
+      cliente: '',
+      fechacreacion: '2023-10-01',
+      usuario: '',
+      correo: 'prueba@prueba.com',
+      direccion: 'Test address',
+      telefono: '123456789',
+      descripcion: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierta',
+      comentarios: 'Test comments',
+      canal: 'mobile',
+      tipo: 'incidencia',
+      gestor: ''
     };
     subscriptions.push(
-      service
-        .crearIncidente(
-          incidenteData.cliente,
-          incidenteData.fechacreacion,
-          incidenteData.usuario,
-          incidenteData.correo,
-          incidenteData.direccion,
-          incidenteData.telefono,
-          incidenteData.descripcion,
-          incidenteData.prioridad,
-          incidenteData.estado,
-          incidenteData.comentarios
-        )
-        .subscribe((response) => {
-          expect(response).toEqual(dummyResponse);
-        })
+      service.crearIncidente(incidenteData).subscribe((response) => {
+        expect(response).toEqual(dummyResponse);
+      })
     );
     const req = httpMock.expectOne(`${environment.urlApi}${environment.portCrearIncidentes}/incidentes`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({
+      id: incidenteData.id,
       cliente: incidenteData.cliente,
       fechacreacion: incidenteData.fechacreacion,
       usuario: incidenteData.usuario,
@@ -71,8 +63,71 @@ describe('IncidentesService', () => {
       descripcion: incidenteData.descripcion,
       prioridad: incidenteData.prioridad,
       estado: incidenteData.estado,
-      comentarios: incidenteData.comentarios
+      comentarios: incidenteData.comentarios,
+      canal: incidenteData.canal,
+      tipo: incidenteData.tipo,
+      gestor: incidenteData.gestor
     });
     req.flush(dummyResponse);
+  });
+
+  it('should get incidents', () => {
+    const incidenteData = {
+      id: '1',
+      cliente: {
+        id: '1',
+        email: '',
+        username: '',
+        password: '',
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        direccion: '',
+        gestor: '',
+        gestortier: '',
+        token: '',
+        rol: {
+          id: 4,
+          nombre: 'cliente',
+          permisos: []
+        }
+      },
+      fechacreacion: '2023-10-01',
+      usuario: {
+        id: '2',
+        email: '',
+        username: '',
+        password: '',
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        direccion: '',
+        gestortier: '',
+        token: '',
+        rol: {
+          id: 2,
+          nombre: 'cliente',
+          permisos: []
+        }
+      },
+      correo: 'prueba@prueba.com',
+      direccion: 'Test address',
+      telefono: '123456789',
+      descripcion: 'Test description',
+      prioridad: 'High',
+      estado: 'Open',
+      comentarios: 'Test comments',
+      canal: 'web',
+      tipo: 'icidencia',
+      gestor: ''
+    };
+    subscriptions.push(
+      service.getIncidencias().subscribe((response) => {
+        expect(response).toEqual([incidenteData]);
+      })
+    );
+    const req = httpMock.expectOne(`${environment.urlApi}${environment.portConsulIncidencias}/incidentes`);
+    expect(req.request.method).toBe('GET');
+    req.flush([incidenteData]);
   });
 });

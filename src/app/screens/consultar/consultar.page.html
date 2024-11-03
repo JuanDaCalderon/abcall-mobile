@@ -1,17 +1,63 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      <ion-skeleton-text *ngIf="!hasLoadTranslations" [animated]="true" style="width: 140px; height: 20px;" />
+      {{"abc.consultarIncidenciaAppMobile.header" | translate}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding listar-incidencia">
+  <ion-row class="ion-align-items-center ion-justify-content-between">
+    <ion-col size="auto">
+      <app-internationalization />
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-padding">
+      <ion-col size="auto">
+        <ion-img class="logo" src="assets/img/logo.png" alt="ABCALL lOGO" />
+      </ion-col>
+      <ion-col size="auto">
+        <h1 class="title">ABCallManager</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <div> Consultar incidencias </div>
+  <ion-card *ngFor="let incidencia of incidencias">
+    <ion-card-header>
+      <ion-card-title>{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.id }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        {{ 'abc.get.issues.status' | translate}}: {{ incidencia.estado }} |
+        {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.prioridad }} |
+        {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.cliente.nombres }} |
+        {{ 'abc.get.issues.user' | translate}}: {{ incidencia.usuario.nombres }}
+      </p>
+      <ion-row>
+        <ion-col>
+          <ion-button color="primary" expand="block">{{ 'abc.get.issues.button.view.edit' | translate}}</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary" expand="block">{{ 'abc.get.issues.button.close' | translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="listar-incidencia">
+        <ion-button class="button-dark" expand="block" (click)="cerrarSesion()">
+          {{"abc.crearIncidenciaAppMobile.logout" | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-label class="ion-padding">{{usuario.nombres}} {{usuario.apellidos}}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
