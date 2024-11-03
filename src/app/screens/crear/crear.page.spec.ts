@@ -113,6 +113,8 @@ describe('CrearPage', () => {
   });
 
   it('should call incidentesService.crearIncidente on submit', async () => {
+    spyOn(component.crearIncidenciaForm, 'reset');
+
     component.crearIncidenciaForm.controls['customer'].setValue('Test Customer');
     component.crearIncidenciaForm.controls['userName'].setValue('Test User');
     component.crearIncidenciaForm.controls['email'].setValue('test@example.com');
@@ -129,6 +131,7 @@ describe('CrearPage', () => {
     expect(incidentesService.crearIncidente).toHaveBeenCalled();
     component.crearIncidenciaForm.reset();
     router.navigate(['/home/consultar_incidentes']);
+    expect(component.crearIncidenciaForm.reset).toHaveBeenCalled();
   });
 
   it('should show error toast on failed submit', async () => {
@@ -295,5 +298,10 @@ describe('CrearPage', () => {
 
     expect(translateService.getTranslation).toHaveBeenCalledWith('es');
     expect(component.hasLoadTranslations).toBeFalse();
+  });
+
+  it('should navigate to /home/consultar_incidentes when home is called', () => {
+    component.home();
+    expect(router.navigate).toHaveBeenCalledWith(['/home/consultar_incidentes']);
   });
 });

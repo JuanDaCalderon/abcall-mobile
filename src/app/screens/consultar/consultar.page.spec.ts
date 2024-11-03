@@ -7,6 +7,10 @@ import {AlertController, IonicModule} from '@ionic/angular';
 import {EventEmitter} from '@angular/core';
 import {of} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
+import {Usuario} from 'src/app/models/usuario.model';
+import {Incidente} from 'src/app/models/incidentes.model';
+import {CrearPage} from '../crear/crear.page';
+
 describe('ConsultarPage', () => {
   let component: ConsultarPage;
   let fixture: ComponentFixture<ConsultarPage>;
@@ -53,6 +57,7 @@ describe('ConsultarPage', () => {
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
     alertController = TestBed.inject(AlertController) as jasmine.SpyObj<any>;
+    localStorage.setItem('usuario', JSON.stringify({id: '1'}));
   });
 
   it('should create', () => {
@@ -67,5 +72,45 @@ describe('ConsultarPage', () => {
     const handler = alertController.create.calls.mostRecent().args[0].buttons[1].handler;
     handler();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should filter incidencias by logged-in user', () => {
+    const mockUsuario: Usuario = {
+      id: '1',
+      email: '',
+      username: '',
+      password: '',
+      nombres: '',
+      apellidos: '',
+      telefono: '',
+      direccion: '',
+      gestortier: '',
+      token: '',
+      rol: {id: 4, nombre: '', permisos: []}
+    };
+
+    const mockIncidencias: Incidente = {
+      id: '1',
+      estado: 'open',
+      prioridad: 'high',
+      cliente: mockUsuario,
+      usuario: mockUsuario,
+      comentarios: '',
+      correo: '',
+      descripcion: '',
+      direccion: '',
+      fechacreacion: '',
+      telefono: '',
+      tipo: '',
+      canal: '',
+      gestor: ''
+    };
+
+    localStorage.setItem('usuario', JSON.stringify(mockUsuario));
+    consultarService.getIncidencias.and.returnValue(of(mockIncidencias));
+
+    fixture.detectChanges();
+    expect(consultarService.getIncidencias).toHaveBeenCalled();
+    expect(component.incidencias.length).toBe(0);
   });
 });

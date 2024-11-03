@@ -33,7 +33,7 @@ export class ConsultarPage {
         this.hasLoadTranslations = !!lang;
       });
     this.consultarService.getIncidencias().subscribe((data: Incidente[]) => {
-      this.incidencias = data;
+      this.incidencias = data.filter((incidencia) => incidencia.usuario.id === this.usuario.id);
     });
   }
 
