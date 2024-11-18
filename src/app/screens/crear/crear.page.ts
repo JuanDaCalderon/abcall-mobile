@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {DEFAULT_LANG} from 'src/app/constants';
 import {IncidentesService} from 'src/app/services/incidentes.service';
-import {Incidente} from 'src/app/models/incidentes.model';
 import {AuthService} from 'src/app/services/auth.service';
 import {Usuario} from 'src/app/models/usuario.model';
 

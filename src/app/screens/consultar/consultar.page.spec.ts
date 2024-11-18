@@ -9,7 +9,6 @@ import {of} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Usuario} from 'src/app/models/usuario.model';
 import {Incidente} from 'src/app/models/incidentes.model';
-import {CrearPage} from '../crear/crear.page';
 
 describe('ConsultarPage', () => {
   let component: ConsultarPage;
