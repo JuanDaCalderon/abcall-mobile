@@ -11,7 +11,6 @@ import {of, throwError} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
 import {EventEmitter} from '@angular/core';
 import {Usuario} from 'src/app/models/usuario.model';
-import {Role} from 'src/app/models/role';
 
 describe('CrearPage', () => {
   let component: CrearPage;

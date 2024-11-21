@@ -61,5 +61,6 @@
     "abc.get.issues.user": "Usuario",
     "abc.get.issues.my.issues": "Lista de incidentes",
     "abc.get.issues.button.view.edit": "Ver / Editar",
-    "abc.get.issues.button.close": "Cerrar"
+    "abc.get.issues.button.close": "Cerrar",
+    "abc.chatbotAppMobile.header": "Chatbot"
 }
