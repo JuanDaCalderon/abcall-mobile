@@ -1,5 +1,5 @@
 describe('consultar incidentes', () => {
-    it('prueba Login mobile', () => {
+    it('prueba consultar mobile', () => {
         cy.visit('http://localhost:8100');
         const emailInput = cy.get('[data-cy="email-input"]');
         const passwordInput = cy.get('[data-cy="password-input"]');
