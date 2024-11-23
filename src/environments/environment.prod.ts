@@ -4,5 +4,6 @@ export const environment = {
   portRole: '8002',
   portUsuario: '8003',
   portConsulIncidencias: '8001',
-  portCrearIncidentes: '8000'
+  portCrearIncidentes: '8000',
+  portChatbot: '8007'
 };

@@ -61,6 +61,6 @@
     "abc.get.issues.user": "User",
     "abc.get.issues.my.issues": "Issues list",
     "abc.get.issues.button.view.edit": "View / Edit",
-    "abc.get.issues.button.close": "Close"
-
+    "abc.get.issues.button.close": "Close",
+    "abc.chatbotAppMobile.header": "Chatbot"
 }
